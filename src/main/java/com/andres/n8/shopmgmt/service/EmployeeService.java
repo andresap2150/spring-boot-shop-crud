@@ -1,0 +1,44 @@
+package com.andres.n8.shopmgmt.service;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.andres.n8.shopmgmt.model.EmployeeDto;
+import com.andres.n8.shopmgmt.repo.Employee;
+import com.andres.n8.shopmgmt.repo.EmployeeRepository;
+
+@Component
+public class EmployeeService {
+	
+	@Autowired
+	EmployeeRepository repo;
+	
+	public void add(EmployeeDto dto) {
+		repo.save(toEntity(dto));
+	}
+	
+	public void delete(long id) {
+		repo.deleteById(id);
+	}
+	
+	public List<Employee> getEmployes() {
+		return  (List<Employee>) repo.findAll();
+	}
+
+	public Employee getEmployeeById(long id) {
+		Optional<Employee> optionalEmployee = repo.findById(id);
+		return optionalEmployee.orElseThrow(()-> new EntityNotFoundException("employee", id+""));
+	}
+	
+	private Employee toEntity(EmployeeDto dto) {
+		Employee entity = new Employee();
+		entity.setName(dto.getName());
+		entity.setAddres(dto.getAddres());
+		entity.setTelephone(dto.getTelephone());
+		entity.setEmployee_type(dto.getEmployee_type());
+		return entity;
+	}
+}
