@@ -1,9 +1,14 @@
 package com.andres.n8.shopmgmt.repo;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -15,6 +20,8 @@ public class Shop {
 	private String name;
 	private String addres;
 	private String telephone;
+	@OneToMany(mappedBy="shop",cascade=CascadeType.ALL)
+	private Set<Atendance> atendances;
 	
 	public long getId() {
 		return id;

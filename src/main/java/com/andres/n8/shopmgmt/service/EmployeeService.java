@@ -9,12 +9,16 @@ import org.springframework.stereotype.Component;
 import com.andres.n8.shopmgmt.model.EmployeeDto;
 import com.andres.n8.shopmgmt.repo.Employee;
 import com.andres.n8.shopmgmt.repo.EmployeeRepository;
+import com.andres.n8.shopmgmt.repo.EmployeeType;
+import com.andres.n8.shopmgmt.repo.EmployeeTypeRepository;
 
 @Component
 public class EmployeeService {
 	
 	@Autowired
 	EmployeeRepository repo;
+	@Autowired
+	EmployeeTypeRepository typeRepo;
 	
 	public void add(EmployeeDto dto) {
 		repo.save(toEntity(dto));
@@ -34,11 +38,12 @@ public class EmployeeService {
 	}
 	
 	private Employee toEntity(EmployeeDto dto) {
+		EmployeeType type = typeRepo.findById(dto.getEmployee_type()).orElseThrow(()-> new EntityNotFoundException("EmployeeType", dto.getEmployee_type()+""));
 		Employee entity = new Employee();
 		entity.setName(dto.getName());
 		entity.setAddres(dto.getAddres());
 		entity.setTelephone(dto.getTelephone());
-		entity.setEmployee_type(dto.getEmployee_type());
+		entity.setEmployee_type(type); 
 		return entity;
 	}
 }

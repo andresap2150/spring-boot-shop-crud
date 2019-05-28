@@ -1,9 +1,15 @@
 package com.andres.n8.shopmgmt.repo;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -15,7 +21,11 @@ public class Employee {
 	private String name;
 	private String telephone;
 	private String addres;
-	private long employee_type;
+	@ManyToOne
+	@JoinColumn(name="employee_type")
+	private EmployeeType employee_type;
+	@OneToMany(mappedBy="employee", cascade=CascadeType.ALL)
+	private Set<Atendance> atendances;
 	
 	public long getId() {
 		return id;
@@ -41,10 +51,11 @@ public class Employee {
 	public void setAddres(String addres) {
 		this.addres = addres;
 	}
-	public long getEmployee_type() {
+	public EmployeeType getEmployee_type() {
 		return employee_type;
 	}
-	public void setEmployee_type(long employee_type) {
+	public void setEmployee_type(EmployeeType employee_type) {
 		this.employee_type = employee_type;
-	}	
+	}
+
 }

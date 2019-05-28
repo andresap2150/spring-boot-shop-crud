@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -14,8 +16,10 @@ public class Atendance {
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private long id;
-	private long employee_id;
-	private long shop_id;
+	@ManyToOne
+	private Employee employee;
+	@ManyToOne
+	private Shop shop;
 	private Date start_date;
 	private Date end_date;
 	
@@ -25,17 +29,18 @@ public class Atendance {
 	public void setId(long id) {
 		this.id = id;
 	}
-	public long getEmployee_id() {
-		return employee_id;
+	
+	public Employee getEmployee() {
+		return employee;
 	}
-	public void setEmployee_id(long employee_id) {
-		this.employee_id = employee_id;
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
 	}
-	public long getShop_id() {
-		return shop_id;
+	public Shop getShop() {
+		return shop;
 	}
-	public void setShop_id(long shop_id) {
-		this.shop_id = shop_id;
+	public void setShop(Shop shop) {
+		this.shop = shop;
 	}
 	public Date getStart_date() {
 		return start_date;
